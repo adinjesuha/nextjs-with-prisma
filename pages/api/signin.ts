@@ -10,10 +10,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   const user = await prisma.user.findUnique({
     where: {
       email,
-    }
-  })
-  
-  if (user && bcrypt.compareSync(password, user.password)){
+    },
+  });
+  if (user && bcrypt.compareSync(password, user.password)) {
     const token = jwt.sign(
       {
         id: user.id,
@@ -24,7 +23,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       {
         expiresIn: "8h",
       }
-    )
+    );
 
     res.setHeader(
       "Set-Cookie",
@@ -38,7 +37,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     );
 
     res.json(user);
-  } else{
+  } else {
     res.status(401);
     res.json({ error: "Email or password is wrong" });
   }

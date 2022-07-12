@@ -31,8 +31,10 @@ const run = async () => {
     create: {
       email: "user@test.com",
       password: bcrypt.hashSync("password", salt),
+      firstName: "Adin",
+      lastName: "Jesuha",
     },
-  })
+  });
 
   const songs = await prisma.song.findMany({})
   await Promise.all(
